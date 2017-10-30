@@ -1,6 +1,7 @@
 package bot;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.IChannel;
 
 public class MyEvents {
     private int fN;
@@ -13,6 +14,8 @@ public class MyEvents {
 
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event){
+        BotUtils.sendMessage(event.getClient().getChannelByID(369873891830792194L), "Test");
+        $OO.println(event.getChannel().toString());
         //This is the calculator code
         if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "calc")){
             calcStep = 1;
