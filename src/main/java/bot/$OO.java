@@ -1,4 +1,4 @@
-package Tools;
+package bot;
 
 /**
  * This class is my tools class where I will make

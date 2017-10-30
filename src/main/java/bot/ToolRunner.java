@@ -1,4 +1,4 @@
-package Tools;
+package bot;
 
 public class ToolRunner {
 }
