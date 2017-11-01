@@ -10,9 +10,8 @@ public class Gambling{
     int rand = 0;
     private static final String FILENAME = "/Users/oliver.odendaal/git/ComputerSciProject1/src/main/java/bot/money.txt";
     //0:49 - Returns 0
-    //50:75 - Returns the same value
-    //76:89 - Returns 1.5 times the value
-    //90:98 - Returns 2 times the value
+    //50:60 - Returns the same value
+    //61:98 - Returns 2 times the value
     //99:100 - Returns 5 times the value
     public String gamble(String user, int money) throws IOException{
         List<String> list = new ArrayList<String>();
@@ -55,19 +54,11 @@ public class Gambling{
             $OO.writeToFile(FILENAME, stringArr);
             return("You lost! " + "Your roll was a " + rand + " Your new balance is " + String.valueOf(newBal));
         }
-        else if (rand >= 50 && rand <= 75){
+        else if (rand >= 50 && rand <= 60){
             //Do nothing
             return("You did not lose anything! " + "Your roll was a " + rand + " Your balance is the same");
         }
-        else if (rand >= 76 && rand <= 89){
-            int newBal = Integer.parseInt(stringArr[location+1]);
-            newBal = newBal + ((int)money/2);
-            String balToSend = String.valueOf(newBal);
-            stringArr[location+1] = balToSend;
-            $OO.writeToFile(FILENAME, stringArr);
-            return("You won! " + "Your roll was a " + rand + " Your new balance is " + String.valueOf(newBal));
-        }
-        else if (rand >= 90 && rand <= 98){
+        else if (rand >= 61 && rand <= 98){
             int newBal = Integer.parseInt(stringArr[location+1]);
             newBal = newBal + money;
             String balToSend = String.valueOf(newBal);
