@@ -69,7 +69,7 @@ public class Gambling{
         }
         else if (rand >= 90 && rand <= 98){
             int newBal = Integer.parseInt(stringArr[location+1]);
-            newBal = newBal + ((int)money*2);
+            newBal = newBal + money;
             String balToSend = String.valueOf(newBal);
             stringArr[location+1] = balToSend;
             $OO.writeToFile(FILENAME, stringArr);
@@ -77,7 +77,7 @@ public class Gambling{
         }
         else if (rand >= 99 && rand <= 100){
             int newBal = Integer.parseInt(stringArr[location+1]);
-            newBal = newBal + ((int)money*5);
+            newBal = newBal + ((int)money*4);
             String balToSend = String.valueOf(newBal);
             stringArr[location+1] = balToSend;
             $OO.writeToFile(FILENAME, stringArr);
