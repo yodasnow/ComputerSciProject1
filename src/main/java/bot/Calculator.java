@@ -14,6 +14,9 @@ public class Calculator {
         else if (operator.equals("/")){
             return  (firstNum / secondNum);
         }
+        else if (operator.equals("%")){
+            return (firstNum % secondNum);
+        }
         return(0);
     }
 }
