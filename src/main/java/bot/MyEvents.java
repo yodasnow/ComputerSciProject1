@@ -45,8 +45,13 @@ public class MyEvents {
         }
         //This is the gambling code
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "gamble")){
-            int bet = Integer.parseInt(event.getMessage().getContent().toString().substring(8));
-            BotUtils.sendMessage(event.getChannel(), String.valueOf(gamble.gamble(event.getMessage().getAuthor().toString(), bet)));
+            try{
+                int bet = Integer.parseInt(event.getMessage().getContent().toString().substring(8));
+                BotUtils.sendMessage(event.getChannel(), String.valueOf(gamble.gamble(event.getMessage().getAuthor().toString(), bet)));
+            }
+            catch (StringIndexOutOfBoundsException e){
+                BotUtils.sendMessage(event.getChannel(), "Please put in a value");
+            }
         }
         //Checking your bal
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "bal")){
@@ -56,6 +61,20 @@ public class MyEvents {
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "findmyid")){
             BotUtils.sendMessage(event.getChannel(), "Your id is " + event.getAuthor().toString().substring(3, 21));
             $OO.println("An ID to add to money.txt is " + event.getAuthor().toString());
+        }
+        //Link to help channel
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "help")){
+            BotUtils.sendMessage(event.getChannel(), "Please visit this channel <#373111723722407937>");
+            $OO.pause(200);
+            BotUtils.sendMessage(event.getChannel(), "If you have any more questions message <@!285238921204334593>");
+        }
+        //Show information about the event
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "eventinfo")){
+            BotUtils.sendMessage(event.getChannel(), "Info has been sent to the console");
+            $OO.println("Author");
+            $OO.println(event.getAuthor().toString());
+            $OO.println("Channel");
+            $OO.println(event.getChannel().toString());
         }
     }
 
