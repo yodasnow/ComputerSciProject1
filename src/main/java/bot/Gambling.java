@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Gambling{
     int rand = 0;
-    private static final String FILENAME = "/Users/oliver.odendaal/git/ComputerSciProject1/src/main/java/bot/money.txt";
+    private static final String FILENAME = "/Users/_____/git/ComputerSciProject1/src/main/java/bot/money.txt";
     //0:49 - Returns 0
     //50:60 - Returns the same value
     //61:98 - Returns 2 times the value
