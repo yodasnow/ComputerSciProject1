@@ -41,7 +41,6 @@ public class $OO {
 
         }
     }
-
     //public static
     /**
      * This method returns a random int from 0 - 100
@@ -59,7 +58,6 @@ public class $OO {
     //public static void discordSendMsg(Event event, String str){
     //    BotUtils.sendMessage(MessageReceivedEvent.getClient().getChannelByID(369873891830792194L), "Test");
     //}
-
     /**
      * This method will create or overwrite file "fileName.txt" with each element from the Array data
      * @param fileName

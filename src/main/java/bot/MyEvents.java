@@ -1,19 +1,31 @@
 package bot;
+import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.IShard;
 import sx.blah.discord.api.events.EventSubscriber;
+import sx.blah.discord.handle.audio.IAudioManager;
+import sx.blah.discord.handle.audit.ActionType;
+import sx.blah.discord.handle.audit.AuditLog;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.*;
+import sx.blah.discord.util.Ban;
+import sx.blah.discord.util.Image;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class MyEvents {
     private int fN;
     private int sN;
     private int calcStep = 0;
+    private int purchaseStep = 0;
     private String op;
     private String msg;
     private String msgAuthor;
     private Calculator calc = new Calculator();
     private Gambling gamble = new Gambling();
+    private MiskewCommands mcmds = new MiskewCommands();
+    private Shop shop = new Shop();
 
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event) throws IOException{
@@ -67,6 +79,87 @@ public class MyEvents {
             BotUtils.sendMessage(event.getChannel(), "Please visit this channel <#373111723722407937>");
             $OO.pause(200);
             BotUtils.sendMessage(event.getChannel(), "If you have any more questions message <@!285238921204334593>");
+        }
+        //Money roles
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "purchase") && purchaseStep == 0){
+            purchaseStep = 1;
+            BotUtils.sendMessage(event.getChannel(), "Please select which role you would like to purchase.");
+            $OO.pause(200);
+            BotUtils.sendMessage(event.getChannel(), "You can choose from: $1000, $5000, $10000, $20000, $50000.");
+            $OO.pause(200);
+            BotUtils.sendMessage(event.getChannel(), "Please reply with just the number of the role you would like to purchase.");
+        }
+        else if(event.getMessage().getContent().startsWith("1000") && purchaseStep == 1){
+            purchaseStep = 0;
+            String strRole = event.getMessage().getContent().toString();
+            BotUtils.sendMessage(event.getChannel(), "Processing request...");
+            $OO.pause(200);
+            if(shop.rolePurchase(event.getAuthor().toString(), strRole) == true){
+                event.getAuthor().addRole(event.getGuild().getRoleByID(377524546619703297L));
+                BotUtils.sendMessage(event.getChannel(), "You have purchased the role " + event.getAuthor());
+            }
+            else{
+                BotUtils.sendMessage(event.getChannel(), "You do not have enough money to purchase that.");
+            }
+        }
+        else if(event.getMessage().getContent().startsWith("5000") && purchaseStep == 1){
+            purchaseStep = 0;
+            String strRole = event.getMessage().getContent().toString();
+            BotUtils.sendMessage(event.getChannel(), "Processing request...");
+            $OO.pause(200);
+            if(shop.rolePurchase(event.getAuthor().toString(), strRole) == true){
+                event.getAuthor().addRole(event.getGuild().getRoleByID(377524569478660106L));
+                BotUtils.sendMessage(event.getChannel(), "You have purchased the role " + event.getAuthor());
+            }
+            else{
+                BotUtils.sendMessage(event.getChannel(), "You do not have enough money to purchase that.");
+            }
+        }
+        else if(event.getMessage().getContent().startsWith("10000") && purchaseStep == 1){
+            purchaseStep = 0;
+            String strRole = event.getMessage().getContent().toString();
+            BotUtils.sendMessage(event.getChannel(), "Processing request...");
+            $OO.pause(200);
+            if(shop.rolePurchase(event.getAuthor().toString(), strRole) == true){
+                event.getAuthor().addRole(event.getGuild().getRoleByID(377524609425080325L));
+                BotUtils.sendMessage(event.getChannel(), "You have purchased the role " + event.getAuthor());
+            }
+            else{
+                BotUtils.sendMessage(event.getChannel(), "You do not have enough money to purchase that.");
+            }
+        }
+        else if(event.getMessage().getContent().startsWith("20000") && purchaseStep == 1){
+            purchaseStep = 0;
+            String strRole = event.getMessage().getContent().toString();
+            BotUtils.sendMessage(event.getChannel(), "Processing request...");
+            $OO.pause(200);
+            if(shop.rolePurchase(event.getAuthor().toString(), strRole) == true){
+                event.getAuthor().addRole(event.getGuild().getRoleByID(377524635924824065L));
+                BotUtils.sendMessage(event.getChannel(), "You have purchased the role " + event.getAuthor());
+            }
+            else{
+                BotUtils.sendMessage(event.getChannel(), "You do not have enough money to purchase that.");
+            }
+        }
+        else if(event.getMessage().getContent().startsWith("50000") && purchaseStep == 1){
+            purchaseStep = 0;
+            String strRole = event.getMessage().getContent().toString();
+            BotUtils.sendMessage(event.getChannel(), "Processing request...");
+            $OO.pause(200);
+            if(shop.rolePurchase(event.getAuthor().toString(), strRole) == true){
+                event.getAuthor().addRole(event.getGuild().getRoleByID(377524660780400640L));
+                BotUtils.sendMessage(event.getChannel(), "You have purchased the role " + event.getAuthor());
+            }
+            else{
+                BotUtils.sendMessage(event.getChannel(), "You do not have enough money to purchase that.");
+            }
+        }
+        //Money give to Mr. Miskew
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "moneygive")){
+            if (event.getAuthor().toString().equals("<@!377900189312352259>") || event.getAuthor().toString().equals("<@!285238921204334593>")){
+                int moneyAmount = Integer.parseInt(event.getMessage().getContent().substring(11));
+                BotUtils.sendMessage(event.getChannel(), mcmds.moneyGive(moneyAmount));
+            }
         }
         //Show information about the event
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "eventinfo")){

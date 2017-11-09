@@ -40,7 +40,7 @@ public class Gambling{
         //File reading done
         rand = $OO.gambleInt();
         int location = Arrays.asList(stringArr).indexOf(user);
-        if (Integer.parseInt(stringArr[location+1]) >= money){
+        if (Integer.parseInt(stringArr[location+1]) >= money && Integer.parseInt(stringArr[location+1]) >= 1){
 
         }
         else{
