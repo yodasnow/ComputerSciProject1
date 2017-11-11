@@ -154,6 +154,15 @@ public class MyEvents {
                 BotUtils.sendMessage(event.getChannel(), "You do not have enough money to purchase that.");
             }
         }
+        //Michael !sauce command
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "sauce")){
+            int times = Integer.parseInt(event.getMessage().getContent().toString().substring(7));
+            if (times <= 10){
+                for (int i = 0; i < times; i++){
+                    BotUtils.sendMessage(event.getChannel(), "DEUS VULT INFIDEL");
+                }
+            }
+        }
         //Money give to Mr. Miskew
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "moneygive")){
             if (event.getAuthor().toString().equals("<@!377900189312352259>") || event.getAuthor().toString().equals("<@!285238921204334593>")){
