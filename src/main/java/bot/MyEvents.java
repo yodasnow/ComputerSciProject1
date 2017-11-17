@@ -1,18 +1,8 @@
 package bot;
-import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.api.IShard;
 import sx.blah.discord.api.events.EventSubscriber;
-import sx.blah.discord.handle.audio.IAudioManager;
-import sx.blah.discord.handle.audit.ActionType;
-import sx.blah.discord.handle.audit.AuditLog;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.obj.*;
-import sx.blah.discord.util.Ban;
-import sx.blah.discord.util.Image;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class MyEvents {
     private int fN;
@@ -24,8 +14,9 @@ public class MyEvents {
     private String msgAuthor;
     private Calculator calc = new Calculator();
     private Gambling gamble = new Gambling();
-    private MiskewCommands mcmds = new MiskewCommands();
+    private SpecialCommands specCmds = new SpecialCommands();
     private Shop shop = new Shop();
+    private Daily daily = new Daily();
 
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event) throws IOException{
@@ -37,7 +28,6 @@ public class MyEvents {
             BotUtils.sendMessage(event.getChannel(), "You have now entered the calculator mode, please input the first value.");
         }
         else if(event.getMessage().getAuthor().toString().equals(msgAuthor) && calcStep == 1){
-            System.out.println("The code reached the next step");
             calcStep = 2;
             msg = event.getMessage().getContent();
             fN = Integer.parseInt(msg);
@@ -68,11 +58,6 @@ public class MyEvents {
         //Checking your bal
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "bal")){
             BotUtils.sendMessage(event.getChannel(), "Your balance " + event.getAuthor().toString() + " is " + String.valueOf(gamble.bal(event.getAuthor().toString())));
-        }
-        //Get your id
-        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "findmyid")){
-            BotUtils.sendMessage(event.getChannel(), "Your id is " + event.getAuthor().toString().substring(3, 21));
-            $OO.println("An ID to add to money.txt is " + event.getAuthor().toString());
         }
         //Link to help channel
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "help")){
@@ -154,21 +139,28 @@ public class MyEvents {
                 BotUtils.sendMessage(event.getChannel(), "You do not have enough money to purchase that.");
             }
         }
-        //Michael !sauce command
-        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "sauce")){
-            int times = Integer.parseInt(event.getMessage().getContent().toString().substring(7));
-            if (times <= 10){
-                for (int i = 0; i < times; i++){
-                    BotUtils.sendMessage(event.getChannel(), "DEUS VULT INFIDEL");
-                }
+        //Daily money amount
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "daily")){
+            if(event.getAuthor().toString().equals("<@!285238921204334593>")){
+                BotUtils.sendMessage(event.getChannel(), daily.daily());
             }
         }
         //Money give to Mr. Miskew
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "moneygive")){
-            if (event.getAuthor().toString().equals("<@!377900189312352259>") || event.getAuthor().toString().equals("<@!285238921204334593>")){
+            if(event.getAuthor().toString().equals("<@!377900189312352259>")){
                 int moneyAmount = Integer.parseInt(event.getMessage().getContent().substring(11));
-                BotUtils.sendMessage(event.getChannel(), mcmds.moneyGive(moneyAmount));
+                BotUtils.sendMessage(event.getChannel(), specCmds.moneyGive(moneyAmount, event.getAuthor().toString()));
             }
+        }
+        //Reserve money give to Oliver
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "moneyReserve")){
+            if(event.getAuthor().toString().equals("<@!285238921204334593>")){
+                BotUtils.sendMessage(event.getChannel(), specCmds.moneyGive(5000, event.getAuthor().toString()));
+            }
+        }
+        //Get your id
+        else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "findmyid")){
+            BotUtils.sendMessage(event.getChannel(), "Your id is " + event.getAuthor().toString().substring(3, 21));
         }
         //Show information about the event
         else if(event.getMessage().getContent().startsWith(BotUtils.BOT_PREFIX + "eventinfo")){
@@ -177,6 +169,8 @@ public class MyEvents {
             $OO.println(event.getAuthor().toString());
             $OO.println("Channel");
             $OO.println(event.getChannel().toString());
+            $OO.println("Message");
+            $OO.print(event.getMessage().toString());
         }
     }
 

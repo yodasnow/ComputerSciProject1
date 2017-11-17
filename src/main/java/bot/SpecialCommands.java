@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MiskewCommands {
+public class SpecialCommands {
     private static final String FILENAME = "/Users/oliver.odendaal/git/ComputerSciProject1/src/main/java/bot/money.txt";
-    private static final String USER = "<@!377900189312352259>";
-    public String moneyGive(int amount) throws IOException{
+    public String moneyGive(int amount, String user) throws IOException{
         List<String> list = new ArrayList<String>();
         BufferedReader br = null;
         FileReader fr = null;
@@ -34,13 +33,13 @@ public class MiskewCommands {
             }
         }
         String[] stringArr = list.toArray(new String[0]);
-        int location = Arrays.asList(stringArr).indexOf(USER);
+        int location = Arrays.asList(stringArr).indexOf(user);
         String curBal = stringArr[location+1];
         int newBal = Integer.parseInt(curBal);
         newBal += amount;
         String balChange = String.valueOf(newBal);
         stringArr[location+1] = balChange;
         $OO.writeToFile(FILENAME, stringArr);
-        return ("Completed the task and gave <@!377900189312352259> $" + String.valueOf(amount));
+        return ("Completed the task and gave " + user + " $" + String.valueOf(amount));
     }
 }
